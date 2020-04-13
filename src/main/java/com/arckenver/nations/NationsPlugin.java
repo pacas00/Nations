@@ -34,7 +34,7 @@ import com.arckenver.nations.service.NationsService;
 import com.arckenver.nations.task.TaxesCollectRunnable;
 import com.google.inject.Inject;
 
-@Plugin(id = "nations", name = "Nations", authors={"Arckenver", "Carrot"}, url="https://github.com/Arckenver/Nations")
+@Plugin(id = "nations-updated", name = "Nations", authors={"Arckenver", "Carrot"}, url="https://github.com/Arckenver/Nations", version = "2.10.1")
 public class NationsPlugin
 {
 	private File rootDir;
