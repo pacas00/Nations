@@ -30,6 +30,10 @@ public class InteractPermListener
 	@Listener
 	public void onCollideBlock(CollideBlockEvent event, @First Player player)
 	{
+		if (player.hasPermission("nations.admin.bypass.perm.build"))
+		{
+			return;
+		}
 		if (ConfigHandler.getNode("worlds").getNode(event.getTargetLocation().getExtent().getName()).getNode("enabled").getBoolean()
 				&& !ConfigHandler.isWhitelisted("build", event.getTargetBlock().getType().getId())
 				&& !DataHandler.getPerm("build", player.getUniqueId(), event.getTargetLocation()))
