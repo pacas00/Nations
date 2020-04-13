@@ -39,7 +39,6 @@ public class InteractPermListener
 				&& !DataHandler.getPerm("build", player.getUniqueId(), event.getTargetLocation()))
 		{
 			event.setCancelled(true);
-			player.sendMessage(Text.of(TextColors.RED, LanguageHandler.ERROR_PERM_INTERACT));
 		}
 	}
 
