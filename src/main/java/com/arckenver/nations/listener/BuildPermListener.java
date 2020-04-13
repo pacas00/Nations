@@ -1,10 +1,16 @@
 package com.arckenver.nations.listener;
 
+import org.spongepowered.api.block.BlockTypes;
+import org.spongepowered.api.block.trait.BooleanTraits;
+import org.spongepowered.api.block.trait.EnumTraits;
+import org.spongepowered.api.block.trait.IntegerTrait;
+import org.spongepowered.api.block.trait.IntegerTraits;
 import org.spongepowered.api.entity.living.player.Player;
 import org.spongepowered.api.entity.living.player.User;
 import org.spongepowered.api.event.Listener;
 import org.spongepowered.api.event.Order;
 import org.spongepowered.api.event.block.ChangeBlockEvent;
+import org.spongepowered.api.event.block.CollideBlockEvent;
 import org.spongepowered.api.event.block.tileentity.ChangeSignEvent;
 import org.spongepowered.api.event.cause.entity.spawn.SpawnTypes;
 import org.spongepowered.api.event.entity.SpawnEntityEvent;
@@ -36,6 +42,14 @@ public class BuildPermListener
 					&& !ConfigHandler.isWhitelisted("build", trans.getFinal().getState().getType().getId())
 					&& !DataHandler.getPerm("build", player.getUniqueId(), loc))
 			{
+				if(trans.getOriginal().getState().getType().equals(BlockTypes.WOODEN_PRESSURE_PLATE)
+						|| trans.getOriginal().getState().getType().equals(BlockTypes.STONE_PRESSURE_PLATE)
+						|| trans.getOriginal().getState().getType().equals(BlockTypes.HEAVY_WEIGHTED_PRESSURE_PLATE)
+						|| trans.getOriginal().getState().getType().equals(BlockTypes.LIGHT_WEIGHTED_PRESSURE_PLATE)
+				){
+					return;
+				}
+
 				trans.setValid(false);
 				try {
 					player.sendMessage(Text.of(TextColors.RED, LanguageHandler.ERROR_PERM_BUILD));

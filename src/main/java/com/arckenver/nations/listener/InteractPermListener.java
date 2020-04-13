@@ -11,6 +11,7 @@ import org.spongepowered.api.entity.living.monster.Monster;
 import org.spongepowered.api.entity.living.player.Player;
 import org.spongepowered.api.event.Listener;
 import org.spongepowered.api.event.Order;
+import org.spongepowered.api.event.block.CollideBlockEvent;
 import org.spongepowered.api.event.block.InteractBlockEvent;
 import org.spongepowered.api.event.entity.InteractEntityEvent;
 import org.spongepowered.api.event.filter.cause.First;
@@ -25,6 +26,19 @@ import com.arckenver.nations.LanguageHandler;
 
 public class InteractPermListener
 {
+
+	@Listener
+	public void onCollideBlock(CollideBlockEvent event, @First Player player)
+	{
+		if (ConfigHandler.getNode("worlds").getNode(event.getTargetLocation().getExtent().getName()).getNode("enabled").getBoolean()
+				&& !ConfigHandler.isWhitelisted("build", event.getTargetBlock().getType().getId())
+				&& !DataHandler.getPerm("build", player.getUniqueId(), event.getTargetLocation()))
+		{
+			event.setCancelled(true);
+			player.sendMessage(Text.of(TextColors.RED, LanguageHandler.ERROR_PERM_INTERACT));
+		}
+	}
+
 	@Listener(order=Order.FIRST, beforeModifications = true)
 	public void onInteract(InteractBlockEvent event, @First Player player)
 	{
