@@ -46,7 +46,8 @@ public class BuildPermListener
 						|| trans.getOriginal().getState().getType().equals(BlockTypes.STONE_PRESSURE_PLATE)
 						|| trans.getOriginal().getState().getType().equals(BlockTypes.HEAVY_WEIGHTED_PRESSURE_PLATE)
 						|| trans.getOriginal().getState().getType().equals(BlockTypes.LIGHT_WEIGHTED_PRESSURE_PLATE)
-				){
+				        || trans.getOriginal().getState().getType().equals(BlockTypes.REDSTONE_WIRE))
+				{
 					return;
 				}
 
