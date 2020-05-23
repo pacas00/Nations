@@ -103,7 +103,13 @@ public class PlayerMoveListener
 				.replaceAll("\\{FORMATZONEPRICE\\}", formatZonePrice)
 				.replaceAll("\\{FORMATPVP\\}", formatPvp));
 
-		player.sendMessage(ChatTypes.ACTION_BAR, finalToast);
-		MessageChannel.TO_CONSOLE.send(Text.of(player.getName(), " entered area ", finalToast));
+		if(ConfigHandler.getNode("others", "enableEnterNotif").getBoolean()){
+			player.sendMessage(ChatTypes.ACTION_BAR, finalToast);
+		}
+
+		if(ConfigHandler.getNode("others", "logNationEnter").getBoolean()){
+			MessageChannel.TO_CONSOLE.send(Text.of(player.getName(), " entered area ", finalToast));
+		}
+
 	}
 }

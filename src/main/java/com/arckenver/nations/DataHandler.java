@@ -390,7 +390,7 @@ public class DataHandler
 
 	public static void calculateWorldChunks()
 	{
-		worldChunks = new Hashtable<UUID, Hashtable<Vector2i, ArrayList<Nation>>>();
+		worldChunks = new Hashtable<>();
 		for (Nation nation : nations.values())
 		{
 			addToWorldChunks(nation);
