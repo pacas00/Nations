@@ -108,6 +108,7 @@ public class LanguageHandler
 	public static String INFO_CONFIGRELOADED = "Config file has been reloaded";
 	
 	public static String INFO_UPKEEPANNOUNCE = "A new day is here ! Nations will now have to pay their upkeeps";
+	public static String INFO_RENTTIME = "It's time to pay rent in your nation, paying the landlord!";
 	public static String INFO_NATIONFAILUPKEEP = "Nation {NATION} could not pay its upkeep and fell into ruins";
 	public static String INFO_NATIONFALL = "Nation {NATION} fell into ruins !";
 
@@ -122,6 +123,7 @@ public class LanguageHandler
 	public static String ERROR_ECOTRANSACTION = "An unexpected error has occured while processing transaction";
 	public static String ERROR_ECONOACCOUNT = "Could not get your account on the economy plugin of this server";
 	public static String ERROR_ECONOOWNER = "Could not get zone owner's account on the economy plugin of this server";
+	public static String ERROR_ECONOZONE = "Could not get zone's account on the economy plugin of this server";
 	public static String ERROR_NEEDMONEY = "You need {AMOUNT} to perform that transaction";
 	public static String ERROR_NEEDMONEYNATION = "Your nation needs {AMOUNT} to perform that transaction";
 	public static String ERROR_NOENOUGHMONEY = "You don't have that much money";
@@ -129,14 +131,18 @@ public class LanguageHandler
 	public static String ERROR_NOMOREBLOCK = "Your nation can't buy more than {NUM} extra blocks";
 	public static String ERROR_NEEDSTANDNATION = "You must be standing in a nation to perform that command";
 	public static String ERROR_PERM_ZONEBUY = "You do not have permission to buy a zone in this nation";
-	
+	public static String ERROR_PERM_ZONERENT = "You do not have permission to rent a zone in this nation";
+
 	public static String SUCCESS_ADDBLOCKS = "Successfully bought {NUM} extra blocks for {AMOUNT}";
 	public static String SUCCESS_UNCLAIM = "You successfully unclaimed this area";
 	public static String SUCCESS_WITHDRAW = "You successfully took {AMOUNT} from your nation that has now {BALANCE}";
 	
 	public static String INFO_UNCLAIMREFUND = "Your nation was refunded {AMOUNT} for unclaiming these {NUM} blocks ({PRECENT}%)";
 	public static String INFO_ZONEFORSALE = "{PLAYER} put zone {ZONE} up for sale at {AMOUNT}";
-	
+	public static String INFO_ZONEFORRENT = "{ZONE} is now up for rent at {AMOUNT}";
+
+	public static String INFO_FAILEDRENT = "You failed your rent and are going to lose the zone {ZONE}";
+
 	public static String INFO_NATIONCHATON_ON = "You are now speaking in your nation's private channel";
 	public static String INFO_NATIONCHAT_OFF = "You are no longer speaking in your nation's private channel";
 	public static String INFO_NATIONSPY_ON = "You are now spying nations' private channels";
@@ -203,9 +209,11 @@ public class LanguageHandler
 	public static String INFO_TELEPORTED = "Teleported you to the nation spawn";
 	public static String ERROR_NEEDSTANDZONE = "You must be standing on a zone to perform that command";
 	public static String ERROR_ZONENFS = "This zone is not up for sale";
+	public static String ERROR_ZONENFR = "This zone is not up for rent";
 	public static String ERROR_ZONENOMONEY = "You need {AMOUNT} to pay for this zone";
 	public static String SUCCESS_ZONEBUY = "You are now the new owner of zone {ZONE}";
-	public static String INFO_ZONEBUY = "{PLAYER} bought you zone {ZONE} for {AMOUNT}";
+	public static String INFO_ZONEBUY = "{PLAYER} bought your zone {ZONE} for {AMOUNT}";
+	public static String INFO_ZONERENT = "{PLAYER} started renting zone {ZONE}";
 	public static String ERROR_NOSTANDZONENATION = "You're not standing on any zone of your nation";
 	public static String ERROR_PERM_NOTOWNER = "You must be owner of that zone to perform that command";
 	public static String ERROR_PERM_MANAGECOOWNER = "You can't add/remove yourself from the coowners of your zone";
@@ -220,7 +228,10 @@ public class LanguageHandler
 	public static String SUCCESS_ZONECREATE = "You have successfully created a zone named {ZONE}";
 	public static String SUCCESS_SETOWNER = "You are now the owner of zone {ZONE} inside of your nation";
 	public static String ERROR_NOOWNER = "You must own this zone to perform that command";
+	public static String ERROR_ISRENTING = "You are renting this zone, use /z return instead";
+	public static String ERROR_ISBOUGHT = "You have bought this zone, use /z delowner instead";
 	public static String INFO_NOOWNER = "Zone {ZONE} has now no owner";
+	public static String INFO_RETURNRENT = "{PLAYER} returned zone {ZONE} and this zone now has no owner";
 	public static String ERROR_NEEDSTANDZONESELF = "You must be standing on your zone to perform that command";
 	public static String ERROR_NEEDZONE = "You must specify zone name or stand on it";
 	public static String HEADER_ZONELIST = "{NATION}'s zones are {ZONELIST}";

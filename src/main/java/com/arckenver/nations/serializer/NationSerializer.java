@@ -117,6 +117,9 @@ public class NationSerializer implements JsonSerializer<Nation> {
 			if (zone.isForSale()) {
 				zoneObj.add("price", new JsonPrimitive(zone.getPrice()));
 			}
+			if (zone.isForRent()) {
+				zoneObj.add("rentalPrice", new JsonPrimitive(zone.getRentalPrice()));
+			}
 
 			zonesArray.add(zoneObj);
 		}

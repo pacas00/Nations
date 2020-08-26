@@ -48,6 +48,9 @@ public class ZoneDelownerExecutor implements CommandExecutor
 				src.sendMessage(Text.of(TextColors.RED, LanguageHandler.ERROR_NOOWNER));
 				return CommandResult.success();
 			}
+			if(zone.isForRent()) {
+				src.sendMessage(Text.of(TextColors.RED, LanguageHandler.ERROR_ISRENTING));
+			}
 			zone.resetCoowners();
 			zone.setOwner(null);
 			DataHandler.saveNation(nation.getUUID());

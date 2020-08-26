@@ -6,6 +6,7 @@ import java.util.Optional;
 import java.util.UUID;
 
 import org.spongepowered.api.Sponge;
+import org.spongepowered.api.entity.living.player.Player;
 import org.spongepowered.api.entity.living.player.User;
 import org.spongepowered.api.event.cause.Cause;
 import org.spongepowered.api.event.cause.EventContext;
@@ -46,7 +47,8 @@ public class TaxesCollectRunnable implements Runnable
 				.append(NationsPlugin.getInstance())
 				.build(context);
 
-		MessageChannel.TO_ALL.send(Text.of(TextColors.AQUA, LanguageHandler.INFO_UPKEEPANNOUNCE));
+		//there is no need to tell upkeep time for non citizens, they might be lost instead
+		Text upkeepAnnounceMassage = Text.of(TextColors.AQUA, LanguageHandler.INFO_UPKEEPANNOUNCE);
 		ArrayList<UUID> nationsToRemove = new ArrayList<UUID>();
 		for (Nation nation : DataHandler.getNations().values())
 		{
@@ -67,6 +69,9 @@ public class TaxesCollectRunnable implements Runnable
 			for (UUID uuid : nation.getCitizens())
 			{
 				Optional<User> user = userStorage.get(uuid);
+				Sponge.getServer().getPlayer(uuid).ifPresent( p -> {
+					p.sendMessage(upkeepAnnounceMassage);
+				});
 				if (user.isPresent() && user.get().hasPermission("nations.admin.nation.exempt"))
 				{
 					continue;

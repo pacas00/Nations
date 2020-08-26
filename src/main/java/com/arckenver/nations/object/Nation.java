@@ -1,10 +1,9 @@
 package com.arckenver.nations.object;
 
-import java.util.ArrayList;
-import java.util.Hashtable;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.util.*;
 import java.util.Map.Entry;
-import java.util.Optional;
-import java.util.UUID;
 
 import org.spongepowered.api.Sponge;
 import org.spongepowered.api.entity.living.player.Player;
@@ -42,6 +41,8 @@ public class Nation {
 	private int extras;
 	private int extraspawns;
 	private double taxes;
+	private int rentInterval;// hours
+	private int lastRentCollectHour; //hour of day 0 - 23
 
 	private NationMessageChannel channel = new NationMessageChannel();
 
@@ -61,6 +62,9 @@ public class Nation {
 		this.ministers = new ArrayList<>();
 		this.citizens = new ArrayList<>();
 		this.flags = new Hashtable<>();
+		this.rentInterval = ConfigHandler.getNode("nations", "defaultRentInterval").getInt();
+		this.lastRentCollectHour = LocalTime.now().getHour();
+
 		for (Entry<Object, ? extends CommentedConfigurationNode> e : ConfigHandler.getNode("nations", "flags").getChildrenMap().entrySet()) {
 			flags.put(e.getKey().toString(), e.getValue().getBoolean());
 		}
@@ -350,6 +354,22 @@ public class Nation {
 
 	public int maxBlockSize() {
 		return extras + citizens.size() * ConfigHandler.getNode("others", "blocksPerCitizen").getInt();
+	}
+
+	public int getLastRentCollectHour() {
+		return lastRentCollectHour;
+	}
+
+	public void setLastRentCollectHour(int lastRentCollectHour) {
+		this.lastRentCollectHour = lastRentCollectHour;
+	}
+
+	public NationMessageChannel getChannel() {
+		return channel;
+	}
+
+	public void setChannel(NationMessageChannel channel) {
+		this.channel = channel;
 	}
 
 	public NationMessageChannel getMessageChannel() {

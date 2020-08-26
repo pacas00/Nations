@@ -22,6 +22,7 @@ public class Zone
 	private Hashtable<String, Hashtable<String, Boolean>> perms;
 	private Hashtable<String, Boolean> flags;
 	private BigDecimal price;
+	private BigDecimal rentalPrice;
 	
 	public Zone(UUID uuid, String name, Rect rect)
 	{
@@ -202,10 +203,24 @@ public class Zone
 	public void setPrice(BigDecimal price)
 	{
 		this.price = price;
+		this.rentalPrice = null;
 	}
 	
 	public boolean isForSale()
 	{
 		return price != null;
+	}
+
+	public BigDecimal getRentalPrice() {
+		return rentalPrice;
+	}
+
+	public void setRentalPrice(BigDecimal rentalPrice) {
+		this.rentalPrice = rentalPrice;
+		this.price = null;
+	}
+
+	public boolean isForRent() {
+		return this.rentalPrice != null;
 	}
 }

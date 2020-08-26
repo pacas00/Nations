@@ -88,6 +88,9 @@ public class NationDeserializer implements JsonDeserializer<Nation> {
 				if (zoneObj.has("price")) {
 					zone.setPrice(zoneObj.get("price").getAsBigDecimal());
 				}
+				if(zoneObj.has("rentalPrice")) {
+					zone.setRentalPrice(zoneObj.get("rentalPrice").getAsBigDecimal());
+				}
 				nation.addZone(zone);
 			}
 		}

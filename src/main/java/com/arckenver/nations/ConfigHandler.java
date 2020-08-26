@@ -100,6 +100,7 @@ public class ConfigHandler
 		Utils.ensureBoolean(config.getNode("nations", "canEditTaxes"), true);
 		Utils.ensurePositiveNumber(config.getNode("nations", "defaultTaxes"), 50);
 		Utils.ensurePositiveNumber(config.getNode("nations", "maxTaxes"), 100);
+		Utils.ensurePositiveNumber(config.getNode("nations", "defaultRentInterval"), 24);
 
 		Utils.ensureBoolean(config.getNode("nations", "flags", "pvp"), false);
 		Utils.ensureBoolean(config.getNode("nations", "flags", "mobs"), false);
