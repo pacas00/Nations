@@ -97,9 +97,10 @@ public class Utils
 						((ConfigHandler.getNode("others", "enableNationRanks").getBoolean()) 
 								? ConfigHandler.getNationRank(nation.getNumCitizens()).getNode("nationTitle").getString()
 										: LanguageHandler.FORMAT_NATION)
-						+ " - " + nation.getName()),
+						+ " - " + nation.getDisplayName()),
 				Text.of(TextColors.GOLD, " }----------\n"));
 
+		builder.append(Text.of(TextColors.GOLD, "\n", LanguageHandler.NATION_ID, ": ", TextColors.GREEN, nation.getRealName()));
 		if (!nation.isAdmin())
 		{
 			BigDecimal balance = null;
@@ -326,10 +327,12 @@ public class Utils
 		UUID owner = zone.getOwner();
 		builder.append(
 				Text.of(TextColors.GOLD, "----------{ "),
-				Text.of(TextColors.YELLOW, "" + LanguageHandler.FORMAT_ZONE + " - " + zone.getName()),
+				Text.of(TextColors.YELLOW, "" + LanguageHandler.FORMAT_ZONE + " - " + zone.getDisplayName()),
 				Text.of(TextColors.GOLD, " }----------"),
 				Text.of(TextColors.GOLD, "\n" + LanguageHandler.FORMAT_NATION + ": "),
-				Text.of(TextColors.YELLOW, nation.getName()),
+				Text.of(TextColors.YELLOW, nation.getDisplayName()),
+				Text.of(TextColors.GOLD, "\n" + LanguageHandler.FORMAT_ZONE_ID + ": "),
+				Text.of(TextColors.YELLOW, zone.getName()),
 				Text.of(TextColors.GOLD, "\n" + LanguageHandler.FORMAT_OWNER + ": "),
 				(owner == null) ? Text.of(TextColors.GRAY, LanguageHandler.FORMAT_NONE) : citizenClickable(TextColors.YELLOW, DataHandler.getPlayerName(owner)),
 						Text.of(TextColors.GOLD, "\n" + LanguageHandler.FORMAT_COOWNER + ": ")

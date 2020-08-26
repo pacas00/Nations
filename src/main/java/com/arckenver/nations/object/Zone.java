@@ -15,6 +15,7 @@ public class Zone
 {
 	private UUID uuid;
 	private String name;
+	private String displayName;
 	private UUID owner;
 	private ArrayList<UUID> coowners;
 	private Rect rect;
@@ -77,6 +78,20 @@ public class Zone
 	public String getRealName()
 	{
 		return name;
+	}
+
+	public boolean hasDisplayName() {
+		return this.displayName != null;
+	}
+
+	public String getDisplayName() {
+		if(this.displayName == null)
+			return this.getName();
+		return this.displayName;
+	}
+
+	public void setDisplayName(String displayName) {
+		this.displayName = displayName;
 	}
 
 	public void setName(String name)

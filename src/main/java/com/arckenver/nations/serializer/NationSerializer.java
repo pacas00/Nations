@@ -18,41 +18,40 @@ import com.google.gson.JsonPrimitive;
 import com.google.gson.JsonSerializationContext;
 import com.google.gson.JsonSerializer;
 
-public class NationSerializer implements JsonSerializer<Nation>
-{
+public class NationSerializer implements JsonSerializer<Nation> {
 	@Override
-	public JsonElement serialize(Nation nation, Type type, JsonSerializationContext ctx)
-	{
+	public JsonElement serialize(Nation nation, Type type, JsonSerializationContext ctx) {
 		JsonObject json = new JsonObject();
 
 		json.add("uuid", new JsonPrimitive(nation.getUUID().toString()));
 		json.add("name", new JsonPrimitive(nation.getRealName()));
 		json.add("admin", new JsonPrimitive(nation.isAdmin()));
 
-		if (!nation.isAdmin())
-		{
+		if (!nation.isAdmin()) {
 			json.add("taxes", new JsonPrimitive(nation.getTaxes()));
 			json.add("extras", new JsonPrimitive(nation.getExtras()));
 			json.add("extraspawns", new JsonPrimitive(nation.getExtraSpawns()));
 
 		}
-		
-		if (nation.hasTag())
+
+		if (nation.hasTag()) {
 			json.add("tag", new JsonPrimitive(nation.getTag()));
+		}
+
+		if (nation.hasDisplayName()) {
+			json.add("displayname", new JsonPrimitive(nation.getDisplayName()));
+		}
 
 		JsonObject flags = new JsonObject();
-		for (Entry<String, Boolean> e : nation.getFlags().entrySet())
-		{
+		for (Entry<String, Boolean> e : nation.getFlags().entrySet()) {
 			flags.add(e.getKey(), new JsonPrimitive(e.getValue()));
 		}
 		json.add("flags", flags);
 
 		JsonObject perms = new JsonObject();
-		for (Entry<String, Hashtable<String, Boolean>> e : nation.getPerms().entrySet())
-		{
+		for (Entry<String, Hashtable<String, Boolean>> e : nation.getPerms().entrySet()) {
 			JsonObject obj = new JsonObject();
-			for (Entry<String, Boolean> en : e.getValue().entrySet())
-			{
+			for (Entry<String, Boolean> en : e.getValue().entrySet()) {
 				obj.add(en.getKey(), new JsonPrimitive(en.getValue()));
 			}
 			perms.add(e.getKey(), obj);
@@ -60,8 +59,7 @@ public class NationSerializer implements JsonSerializer<Nation>
 		json.add("perms", perms);
 
 		JsonArray rectArray = new JsonArray();
-		for (Rect r : nation.getRegion().getRects())
-		{
+		for (Rect r : nation.getRegion().getRects()) {
 			JsonObject rectJson = new JsonObject();
 			rectJson.add("world", new JsonPrimitive(r.getWorld().toString()));
 			rectJson.add("minX", new JsonPrimitive(r.getMinX()));
@@ -73,13 +71,14 @@ public class NationSerializer implements JsonSerializer<Nation>
 		json.add("rects", rectArray);
 
 		JsonArray zonesArray = new JsonArray();
-		for (Zone zone : nation.getZones().values())
-		{
+		for (Zone zone : nation.getZones().values()) {
 			JsonObject zoneObj = new JsonObject();
 
 			zoneObj.add("uuid", new JsonPrimitive(zone.getUUID().toString()));
 			if (zone.isNamed())
 				zoneObj.add("name", new JsonPrimitive(zone.getRealName()));
+			if(zone.hasDisplayName())
+				zoneObj.add("displayname", new JsonPrimitive(zone.getDisplayName()));
 
 			JsonObject rectJson = new JsonObject();
 			rectJson.add("world", new JsonPrimitive(zone.getRect().getWorld().toString()));
@@ -89,39 +88,33 @@ public class NationSerializer implements JsonSerializer<Nation>
 			rectJson.add("maxY", new JsonPrimitive(zone.getRect().getMaxY()));
 			zoneObj.add("rect", rectJson);
 
-			if (zone.getOwner() != null)
-			{
+			if (zone.getOwner() != null) {
 				zoneObj.add("owner", new JsonPrimitive(zone.getOwner().toString()));
 			}
 
 			JsonArray coownersArray = new JsonArray();
-			for (UUID coowner : zone.getCoowners())
-			{
+			for (UUID coowner : zone.getCoowners()) {
 				coownersArray.add(new JsonPrimitive(coowner.toString()));
 			}
 			zoneObj.add("coowners", coownersArray);
 
 			JsonObject zoneFlags = new JsonObject();
-			for (Entry<String, Boolean> e : zone.getFlags().entrySet())
-			{
+			for (Entry<String, Boolean> e : zone.getFlags().entrySet()) {
 				zoneFlags.add(e.getKey(), new JsonPrimitive(e.getValue()));
 			}
 			zoneObj.add("flags", zoneFlags);
 
 			JsonObject zonePerms = new JsonObject();
-			for (Entry<String, Hashtable<String, Boolean>> e : zone.getPerms().entrySet())
-			{
+			for (Entry<String, Hashtable<String, Boolean>> e : zone.getPerms().entrySet()) {
 				JsonObject obj = new JsonObject();
-				for (Entry<String, Boolean> en : e.getValue().entrySet())
-				{
+				for (Entry<String, Boolean> en : e.getValue().entrySet()) {
 					obj.add(en.getKey(), new JsonPrimitive(en.getValue()));
 				}
 				zonePerms.add(e.getKey(), obj);
 			}
 			zoneObj.add("perms", zonePerms);
 
-			if (zone.isForSale())
-			{
+			if (zone.isForSale()) {
 				zoneObj.add("price", new JsonPrimitive(zone.getPrice()));
 			}
 
@@ -130,8 +123,7 @@ public class NationSerializer implements JsonSerializer<Nation>
 		json.add("zones", zonesArray);
 
 		JsonObject spawns = new JsonObject();
-		for (Entry<String, Location<World>> e : nation.getSpawns().entrySet())
-		{
+		for (Entry<String, Location<World>> e : nation.getSpawns().entrySet()) {
 			JsonObject loc = new JsonObject();
 			loc.add("world", new JsonPrimitive(e.getValue().getExtent().getUniqueId().toString()));
 			loc.add("x", new JsonPrimitive(e.getValue().getX()));
@@ -141,20 +133,18 @@ public class NationSerializer implements JsonSerializer<Nation>
 			spawns.add(e.getKey(), loc);
 		}
 		json.add("spawns", spawns);
-		
+
 		if (nation.getPresident() != null)
 			json.add("president", new JsonPrimitive(nation.getPresident().toString()));
 
 		JsonArray ministersArray = new JsonArray();
-		for (UUID minister : nation.getMinisters())
-		{
+		for (UUID minister : nation.getMinisters()) {
 			ministersArray.add(new JsonPrimitive(minister.toString()));
 		}
 		json.add("ministers", ministersArray);
 
 		JsonArray citizensArray = new JsonArray();
-		for (UUID citizen : nation.getCitizens())
-		{
+		for (UUID citizen : nation.getCitizens()) {
 			citizensArray.add(new JsonPrimitive(citizen.toString()));
 		}
 		json.add("citizens", citizensArray);

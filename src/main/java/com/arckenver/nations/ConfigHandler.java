@@ -73,6 +73,8 @@ public class ConfigHandler
 		Utils.ensurePositiveNumber(config.getNode("others", "maxNationNameLength"), 13);
 		Utils.ensurePositiveNumber(config.getNode("others", "minNationTagLength"), 3);
 		Utils.ensurePositiveNumber(config.getNode("others", "maxNationTagLength"), 5);
+		Utils.ensurePositiveNumber(config.getNode("others", "minNationDisplayLength"), 3);
+		Utils.ensurePositiveNumber(config.getNode("others", "maxNationDisplayLength"), 32);
 		Utils.ensurePositiveNumber(config.getNode("others", "minZoneNameLength"), 3);
 		Utils.ensurePositiveNumber(config.getNode("others", "maxZoneNameLength"), 13);
 		Utils.ensureBoolean(config.getNode("others", "enableNationRanks"), true);

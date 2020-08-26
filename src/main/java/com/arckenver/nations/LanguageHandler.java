@@ -158,6 +158,7 @@ public class LanguageHandler
 	public static String ERROR_NAMELENGTH = "Nation name must contain at least {MIN} and at most {MAX} characters";
 	public static String ERROR_TAGALPHA = "Nation tag must be alphanumeric";
 	public static String ERROR_TAGLENGTH = "Nation tag must contain at least {MIN} and at most {MAX} characters";
+	public static String ERROR_DISPLAYLENGTH = "Nation display name must contain at least {MIN} and at most {MAX} characters";
 	public static String INFO_NEWNATIONANNOUNCE = "{PLAYER} has created a new nation named {NATION}";
 	public static String INFO_NEWNATION = "You successfully created nation {NATION}, don't forget to deposit money in the nation's bank with /n deposit";
 	public static String INFO_CLICK_DELSPAWN = "Click to delete spawn {SPAWNLIST} ";
@@ -193,6 +194,7 @@ public class LanguageHandler
 	public static String INFO_SUCCESSOR = "{SUCCESSOR} replaces now {PLAYER} as nation's president";
 	public static String INFO_RENAME = "Nation {OLDNAME} changed its name to {NEWNAME}";
 	public static String INFO_TAG = "Nation {NAME} changed its tag from {OLDTAG} to {NEWTAG}";
+	public static String INFO_DISPLAY = "Nation {NAME} changed its display name from {OLDNAME} to {NEWNAME}";
 	public static String ERROR_BADSPAWNLOCATION = "Nation spawn must be set inside your territory";
 	public static String ERROR_ALPHASPAWN = "Spawn name must be alphanumeric and must contain between {MIN} and {MAX} characters";
 	public static String SUCCESS_CHANGESPAWN = "Successfully changed the nation spawn";
@@ -244,12 +246,14 @@ public class LanguageHandler
 	public static String INFO_TELEPORTCOOLDOWN = "Teleport will start in 10 seconds";
 	public static String ERROR_NOHOME = "No spawn named 'home' found. Make one with /n setspawn home";
 	public static String DEFAULT_ZONENAME = "Unnamed";
+	public static String NATION_ID = "Nation ID";
 
 	public static String TOAST_WILDNAME = "Wilderness";
 	public static String TOAST_PVP = "PvP";
 	public static String TOAST_NOPVP = "No PvP";
 	public static String FORMAT_NATION = "Nation";
 	public static String FORMAT_ZONE = "Zone";
+	public static String FORMAT_ZONE_ID = "Zone ID";
 	public static String FORMAT_SIZE = "Size";
 	public static String FORMAT_MONEY = "Money";
 	public static String FORMAT_PRICE = "Price";
