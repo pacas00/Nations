@@ -1,6 +1,8 @@
 # Nations
 
 *See the [official sponge forums thread](https://forums.spongepowered.org/t/nations-v0-1-towny-like-protection-plugin/12127).*
+*See [main repository](https://github.com/Arckenver/Nations).*
+*See [nations updated repository](https://github.com/Kaeios/Nations)."
 
 By Aires:
 Adding a rent system to this plugin totally separated from taxes, to either player nations or admin nations zones.
