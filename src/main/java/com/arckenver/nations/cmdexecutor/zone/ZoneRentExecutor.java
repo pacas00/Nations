@@ -88,7 +88,7 @@ public class ZoneRentExecutor implements CommandExecutor {
 				return CommandResult.success();
 			}
 			zone.setOwner(player.getUniqueId());
-			zone.setPrice(null);
+			zone.setRentalPrice(zone.getRentalPrice());
 			DataHandler.saveNation(nation.getUUID());
 			src.sendMessage(Text.of(TextColors.GREEN, LanguageHandler.SUCCESS_SETOWNER.replaceAll("\\{ZONE\\}", zone.getName())));
 			String str = LanguageHandler.INFO_ZONERENT.replaceAll("\\{PLAYER\\}", player.getName()).replaceAll("\\{ZONE\\}", zone.getDisplayName());

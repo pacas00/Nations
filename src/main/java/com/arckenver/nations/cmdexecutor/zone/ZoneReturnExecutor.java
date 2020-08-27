@@ -96,6 +96,9 @@ public class ZoneReturnExecutor implements CommandExecutor {
 			DataHandler.saveNation(nation.getUUID());
 			String str = LanguageHandler.INFO_RETURNRENT.replaceAll("\\{PLAYER\\}", player.getName()).replaceAll("\\{ZONE\\}", oldName);
 			nation.getChannel().send(Text.of(TextColors.AQUA, str));
+			if(!nation.getCitizens().contains(player.getUniqueId())){
+				player.sendMessage(Text.of(TextColors.AQUA, str));
+			}
 		} else {
 			src.sendMessage(Text.of(TextColors.RED, LanguageHandler.ERROR_NOPLAYER));
 		}

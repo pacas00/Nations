@@ -3,6 +3,7 @@ package com.arckenver.nations.task;
 import com.arckenver.nations.DataHandler;
 import com.arckenver.nations.LanguageHandler;
 import com.arckenver.nations.NationsPlugin;
+import com.arckenver.nations.Utils;
 import com.arckenver.nations.object.Nation;
 import com.arckenver.nations.object.Zone;
 import org.spongepowered.api.Sponge;
@@ -56,7 +57,7 @@ public class RentCollectRunnable implements Runnable {
 		for (Nation nation : DataHandler.getNations().values()) {
 
 			LocalDateTime targetHour = nation.getLastRentCollectTime().plusHours(nation.getRentInterval());
-			if(targetHour.isAfter(nowHour) || targetHour.isEqual(nowHour)) {
+			if(nowHour.isAfter(targetHour) || nowHour.isEqual(targetHour)) {
 
 				if (nation.getPresident() != null) {
 					Sponge.getServer().getPlayer(nation.getPresident()).ifPresent(p -> {
@@ -100,15 +101,27 @@ public class RentCollectRunnable implements Runnable {
 						TransactionResult result = zoneAccount.get().transfer(nationAccount.get(), NationsPlugin.getEcoService().getDefaultCurrency(), rentPrice, cause);
 						if (result.getResult() != ResultType.SUCCESS) {
 							MessageChannel.TO_CONSOLE.send(Text.of(TextColors.RED, LanguageHandler.ERROR_ECOTRANSACTION));
+						} else {
+							String str = LanguageHandler.INFO_PAYRENTZONEBALANCE.replaceAll("\\{ZONE\\}", zone.getDisplayName());
+							String split[] = str.split("\\{VALUE\\}");
+							owner.get().sendMessage(Text.of(TextColors.AQUA, split[0], Utils.formatPrice(TextColors.YELLOW, rentPrice),split[1]));
 						}
 					} else if (zoneBalance.add(ownerBalance).compareTo(rentPrice) >= 0) {
 						TransactionResult result = zoneAccount.get().transfer(nationAccount.get(), NationsPlugin.getEcoService().getDefaultCurrency(), zoneBalance, cause);
 						if (result.getResult() != ResultType.SUCCESS) {
 							MessageChannel.TO_CONSOLE.send(Text.of(TextColors.RED, LanguageHandler.ERROR_ECOTRANSACTION));
+						} else if(zoneBalance.compareTo(BigDecimal.ZERO) > 0){ //only shows if it really paid with it, so it won't flood chat
+							String str = LanguageHandler.INFO_PAYRENTZONEBALANCE.replaceAll("\\{ZONE\\}", zone.getDisplayName());
+							String split[] = str.split("\\{VALUE\\}");
+							owner.get().sendMessage(Text.of(TextColors.AQUA, split[0], Utils.formatPrice(TextColors.YELLOW, zoneBalance),split[1]));
 						}
 						result = ownerAccount.get().transfer(nationAccount.get(), NationsPlugin.getEcoService().getDefaultCurrency(), rentPrice.subtract(zoneBalance), cause);
 						if (result.getResult() != ResultType.SUCCESS) {
 							MessageChannel.TO_CONSOLE.send(Text.of(TextColors.RED, LanguageHandler.ERROR_ECOTRANSACTION));
+						} else {
+							String str = LanguageHandler.INFO_PAYRENTZONEPLAYER.replaceAll("\\{ZONE\\}", zone.getDisplayName());
+							String split[] = str.split("\\{VALUE\\}");
+							owner.get().sendMessage(Text.of(TextColors.AQUA, split[0], Utils.formatPrice(TextColors.YELLOW, rentPrice.subtract(zoneBalance)),split[1]));
 						}
 					} else { //return zone: make zone bal go to owner and make ownerless
 						TransactionResult result = zoneAccount.get().transfer(ownerAccount.get(), NationsPlugin.getEcoService().getDefaultCurrency(), zoneBalance, cause);

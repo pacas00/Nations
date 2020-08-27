@@ -355,6 +355,15 @@ public class Utils
 				(zone.isForRent() && ((zone.isOwned() && clicker == CLICKER_DEFAULT) || !zone.isOwned()))
 						? formatPrice(TextColors.YELLOW, zone.getRentalPrice()) : Text.of(TextColors.GRAY, LanguageHandler.FORMAT_NFR)
 		);
+		if(zone.isForRent() && clicker == CLICKER_DEFAULT) { //either staff, owner or coowner
+			if(NationsPlugin.getEcoService() != null) {
+				Optional<Account> zoneAccount = NationsPlugin.getEcoService().getOrCreateAccount("zone-" + zone.getUUID());
+				zoneAccount.ifPresent(account -> builder.append(
+						Text.of(TextColors.GOLD, "\n" + LanguageHandler.FORMAT_BALANCE + ": "),
+						formatPrice(TextColors.YELLOW, account.getBalance(NationsPlugin.getEcoService().getDefaultCurrency()))
+				));
+			}
+		}
 
 		if (clicker == CLICKER_NONE)
 		{

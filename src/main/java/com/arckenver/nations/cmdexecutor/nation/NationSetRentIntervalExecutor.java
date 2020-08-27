@@ -25,7 +25,7 @@ public class NationSetRentIntervalExecutor implements CommandExecutor {
 				.description(Text.of(""))
 				.permission("nations.command.nation.setrentinterval")
 				.arguments(GenericArguments.optional(GenericArguments.integer(Text.of("interval"))))
-				.executor(new NationBuyextraExecutor())
+				.executor(new NationSetRentIntervalExecutor())
 				.build(), "setrentinterval", "rentinterval");
 	}
 
@@ -49,6 +49,10 @@ public class NationSetRentIntervalExecutor implements CommandExecutor {
 				return CommandResult.success();
 			}
 			int n = ctx.<Integer>getOne("interval").get();
+			if(n < 0) {
+				src.sendMessage(Text.of(TextColors.RED, LanguageHandler.ERROR_NEGATIVEINTERVAL));
+				return CommandResult.success();
+			}
 			nation.setRentInterval(n);
 			DataHandler.saveNation(nation.getUUID());
 			src.sendMessage(Text.of(TextColors.AQUA, LanguageHandler.INFO_RENTINTERVAL.replaceAll("\\{NUMBER\\}", n + "")));

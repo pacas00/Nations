@@ -136,12 +136,17 @@ public class LanguageHandler
 	public static String SUCCESS_ADDBLOCKS = "Successfully bought {NUM} extra blocks for {AMOUNT}";
 	public static String SUCCESS_UNCLAIM = "You successfully unclaimed this area";
 	public static String SUCCESS_WITHDRAW = "You successfully took {AMOUNT} from your nation that has now {BALANCE}";
-	
+	public static String SUCCESS_WITHDRAW_ZONE = "You successfully took {AMOUNT} from your zone that has now {BALANCE}";
+
 	public static String INFO_UNCLAIMREFUND = "Your nation was refunded {AMOUNT} for unclaiming these {NUM} blocks ({PRECENT}%)";
 	public static String INFO_ZONEFORSALE = "{PLAYER} put zone {ZONE} up for sale at {AMOUNT}";
 	public static String INFO_ZONEFORRENT = "{ZONE} is now up for rent at {AMOUNT}";
 
+	public static String INFO_PAYRENTZONEBALANCE = "Paid rent for zone {ZONE} with value {VALUE} using zone's account.";
+	public static String INFO_PAYRENTZONEPLAYER = "Paid rent for zone {ZONE} with value {VALUE} using player's account.";
 	public static String INFO_FAILEDRENT = "You failed your rent and are going to lose the zone {ZONE}";
+
+	public static String ERROR_NOTRENTING = "You are not renting this zone at this moment!";
 
 	public static String INFO_RENTINTERVAL = "You set your nation rent interval to {NUMBER} hours.";
 
@@ -173,6 +178,7 @@ public class LanguageHandler
 	public static String ERROR_BADSPAWNNAME = "Your nation doen't have any spawn with that name";
 	public static String SUCCESS_DELNATION = "Successfully removed nation spawn";
 	public static String SUCCESS_DEPOSIT = "You've successfully given {AMOUNT} to your nation that has now {BALANCE}";
+	public static String SUCCESS_DEPOSIT_ZONE = "You've successfully given {AMOUNT} to your zone that has now {BALANCE}";
 	public static String ERROR_HERE = "You are not standing on any nation's region";
 	public static String ERROR_ALREADYINNATION = "That player is already in your nation";
 	public static String ERROR_ALREADYINVITED = "Your nation already invited this citizen";
@@ -296,6 +302,7 @@ public class LanguageHandler
 	public static String FORMAT_ZONES = "Zones";
 	public static String FORMAT_RENT_INTERVAL = "Rent interval";
 	public static String FORMAT_HOURS = "hours";
+	public static String FORMAT_BALANCE = "Balance";
 
 	public static String CLICKME = "click here";
 	public static String HEADER_NATIONLIST = "Nation List";
@@ -304,6 +311,8 @@ public class LanguageHandler
 	public static String TYPE_INTERACT = "INTERACT";
 	public static String VALUE_TRUE = "true";
 	public static String VALUE_FALSE = "false";
+
+	public static String ERROR_NEGATIVEINTERVAL = "You can't input negative values for rent intervals!";
 
 	public static String AXE_FIRST = "First position set to {COORD}";
 	public static String AXE_SECOND = "Second position set to {COORD}";
@@ -315,7 +324,8 @@ public class LanguageHandler
 	public static String COST_MSG_CLAIMPRICE = "Price per block claimed";
 	public static String COST_MSG_EXTRAPRICE = "Price per extra block";
 	public static String INFO_ZONEFS = "{PLAYER} made zone {ZONE} not for sale";
-	
+
+
 	private static File languageFile;
 	private static ConfigurationLoader<CommentedConfigurationNode> languageManager;
 	private static CommentedConfigurationNode language;

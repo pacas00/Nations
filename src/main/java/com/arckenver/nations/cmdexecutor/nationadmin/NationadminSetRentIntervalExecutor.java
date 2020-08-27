@@ -45,6 +45,10 @@ public class NationadminSetRentIntervalExecutor implements CommandExecutor {
 		if (ctx.<String>getOne("interval").isPresent()) {
 			n = ctx.<Integer>getOne("interval").get();
 		}
+		if(n < 0) {
+			src.sendMessage(Text.of(TextColors.RED, LanguageHandler.ERROR_NEGATIVEINTERVAL));
+			return CommandResult.success();
+		}
 		nation.setRentInterval(n);
 		DataHandler.saveNation(nation.getUUID());
 		src.sendMessage(Text.of(TextColors.AQUA, LanguageHandler.INFO_RENTINTERVAL.replaceAll("\\{NUMBER\\}", n + "")));
