@@ -1,6 +1,9 @@
 package com.arckenver.nations.serializer;
 
 import java.lang.reflect.Type;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.Map.Entry;
 import java.util.Optional;
 import java.util.UUID;
@@ -26,6 +29,17 @@ public class NationDeserializer implements JsonDeserializer<Nation> {
 		String name = obj.get("name").getAsString();
 		boolean isAdmin = obj.get("admin").getAsBoolean();
 		Nation nation = new Nation(uuid, name, isAdmin);
+
+		if (obj.has("rentInterval"))
+			nation.setRentInterval(obj.get("rentInterval").getAsInt());
+		if (obj.has("lastRentCollectYear") && obj.has("lastRentCollectDay") && obj.has("lastRentCollectHour")) {
+			int lastRCYear = obj.get("lastRentCollectYear").getAsInt();
+			int lastRCDay = obj.get("lastRentCollectDay").getAsInt();
+			int lastRCHour = obj.get("lastRentCollectHour").getAsInt();
+			LocalDateTime lastRentCollect = LocalDateTime.of(LocalDate.ofYearDay(lastRCYear, lastRCDay), LocalTime.of(lastRCHour, 0));
+			nation.setLastRentCollectTime(lastRentCollect);
+		}
+
 		if (obj.has("tag"))
 			nation.setTag(obj.get("tag").getAsString());
 		if (obj.has("displayname"))
@@ -59,7 +73,7 @@ public class NationDeserializer implements JsonDeserializer<Nation> {
 				if (zoneObj.has("name"))
 					zoneName = zoneObj.get("name").getAsString();
 				String zoneDisplayName = null;
-				if(zoneObj.has("displayname"))
+				if (zoneObj.has("displayname"))
 					zoneDisplayName = zoneObj.get("displayname").getAsString();
 
 				JsonObject rectObj = zoneObj.get("rect").getAsJsonObject();
@@ -88,7 +102,7 @@ public class NationDeserializer implements JsonDeserializer<Nation> {
 				if (zoneObj.has("price")) {
 					zone.setPrice(zoneObj.get("price").getAsBigDecimal());
 				}
-				if(zoneObj.has("rentalPrice")) {
+				if (zoneObj.has("rentalPrice")) {
 					zone.setRentalPrice(zoneObj.get("rentalPrice").getAsBigDecimal());
 				}
 				nation.addZone(zone);

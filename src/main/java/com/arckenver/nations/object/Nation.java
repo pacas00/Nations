@@ -1,5 +1,6 @@
 package com.arckenver.nations.object;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.*;
@@ -42,7 +43,7 @@ public class Nation {
 	private int extraspawns;
 	private double taxes;
 	private int rentInterval;// hours
-	private int lastRentCollectHour; //hour of day 0 - 23
+	private LocalDateTime lastRentCollectTime;
 
 	private NationMessageChannel channel = new NationMessageChannel();
 
@@ -63,7 +64,7 @@ public class Nation {
 		this.citizens = new ArrayList<>();
 		this.flags = new Hashtable<>();
 		this.rentInterval = ConfigHandler.getNode("nations", "defaultRentInterval").getInt();
-		this.lastRentCollectHour = LocalTime.now().getHour();
+		this.lastRentCollectTime = LocalDateTime.of(LocalDate.now(), LocalTime.of(LocalTime.now().getHour(), 0)); //just hours
 
 		for (Entry<Object, ? extends CommentedConfigurationNode> e : ConfigHandler.getNode("nations", "flags").getChildrenMap().entrySet()) {
 			flags.put(e.getKey().toString(), e.getValue().getBoolean());
@@ -356,12 +357,20 @@ public class Nation {
 		return extras + citizens.size() * ConfigHandler.getNode("others", "blocksPerCitizen").getInt();
 	}
 
-	public int getLastRentCollectHour() {
-		return lastRentCollectHour;
+	public int getRentInterval() {
+		return rentInterval;
 	}
 
-	public void setLastRentCollectHour(int lastRentCollectHour) {
-		this.lastRentCollectHour = lastRentCollectHour;
+	public void setRentInterval(int rentInterval) {
+		this.rentInterval = rentInterval;
+	}
+
+	public LocalDateTime getLastRentCollectTime() {
+		return lastRentCollectTime;
+	}
+
+	public void setLastRentCollectTime(LocalDateTime lastRentCollectTime) {
+		this.lastRentCollectTime = lastRentCollectTime;
 	}
 
 	public NationMessageChannel getChannel() {

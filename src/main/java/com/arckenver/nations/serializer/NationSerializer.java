@@ -26,6 +26,11 @@ public class NationSerializer implements JsonSerializer<Nation> {
 		json.add("uuid", new JsonPrimitive(nation.getUUID().toString()));
 		json.add("name", new JsonPrimitive(nation.getRealName()));
 		json.add("admin", new JsonPrimitive(nation.isAdmin()));
+		json.add("rentInterval", new JsonPrimitive(nation.getRentInterval()));
+		json.add("lastRentCollectYear", new JsonPrimitive(nation.getLastRentCollectTime().getYear()));
+		json.add("lastRentCollectDay", new JsonPrimitive(nation.getLastRentCollectTime().getDayOfYear()));
+		json.add("lastRentCollectHour", new JsonPrimitive(nation.getLastRentCollectTime().getHour()));
+
 
 		if (!nation.isAdmin()) {
 			json.add("taxes", new JsonPrimitive(nation.getTaxes()));
