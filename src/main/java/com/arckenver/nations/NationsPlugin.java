@@ -7,6 +7,7 @@ import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.util.concurrent.TimeUnit;
 
+import com.arckenver.nations.task.RentCollectRunnable;
 import org.slf4j.Logger;
 import org.spongepowered.api.Sponge;
 import org.spongepowered.api.config.ConfigDir;
@@ -106,6 +107,7 @@ public class NationsPlugin {
 
 		Sponge.getScheduler()
 				.createTaskBuilder()
+				.execute(new RentCollectRunnable())
 				.delay(rentDelay, TimeUnit.SECONDS)
 				.interval(1, TimeUnit.HOURS)
 				.async()

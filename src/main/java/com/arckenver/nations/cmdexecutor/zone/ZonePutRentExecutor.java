@@ -20,11 +20,12 @@ import org.spongepowered.api.text.format.TextColors;
 import javax.annotation.Nonnull;
 import javax.annotation.ParametersAreNonnullByDefault;
 import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.UUID;
 
 @SuppressWarnings("RegExpRedundantEscape")
 @ParametersAreNonnullByDefault
-public class ZonePutRentExecutor implements CommandExecutor
-{
+public class ZonePutRentExecutor implements CommandExecutor {
 	public static void create(CommandSpec.Builder cmd) {
 		cmd.child(CommandSpec.builder()
 				.description(Text.of(""))
@@ -35,54 +36,48 @@ public class ZonePutRentExecutor implements CommandExecutor
 	}
 
 	@Nonnull
-	public CommandResult execute(CommandSource src, CommandContext ctx) throws CommandException
-	{
-		if (src instanceof Player)
-		{
+	public CommandResult execute(CommandSource src, CommandContext ctx) throws CommandException {
+		if (src instanceof Player) {
 			Player player = (Player) src;
 			Nation nation = DataHandler.getNation(player.getLocation());
-			if (nation == null)
-			{
+			if (nation == null) {
 				src.sendMessage(Text.of(TextColors.RED, LanguageHandler.ERROR_NEEDSTANDNATION));
 				return CommandResult.success();
 			}
 			Zone zone = nation.getZone(player.getLocation());
-			if (zone == null)
-			{
+			if (zone == null) {
 				src.sendMessage(Text.of(TextColors.RED, LanguageHandler.ERROR_NEEDSTANDZONESELF));
 				return CommandResult.success();
 			}
-			if ((!zone.isOwner(player.getUniqueId()) || nation.isAdmin()) && !nation.isStaff(player.getUniqueId()))
-			{
+			if ((!zone.isOwner(player.getUniqueId()) || nation.isAdmin()) && !nation.isStaff(player.getUniqueId())) {
 				src.sendMessage(Text.of(TextColors.RED, LanguageHandler.ERROR_NOOWNER));
 				return CommandResult.success();
 			}
-			if (!ctx.<Double>getOne("price").isPresent())
-			{
+			if (!ctx.<Double>getOne("price").isPresent()) {
 				src.sendMessage(Text.of(TextColors.YELLOW, "/z putrent <price>"));
 				return CommandResult.success();
 			}
 			BigDecimal price = BigDecimal.valueOf(ctx.<Double>getOne("price").get());
-			if (price.compareTo(BigDecimal.ZERO) == -1)
-			{
+			if (price.compareTo(BigDecimal.ZERO) == -1) {
 				src.sendMessage(Text.of(TextColors.RED, LanguageHandler.ERROR_BADARG_P));
 				return CommandResult.success();
 			}
 			zone.setRentalPrice(price);
 			DataHandler.saveNation(nation.getUUID());
-			nation.getCitizens().forEach(
-				uuid -> Sponge.getServer().getPlayer(uuid).ifPresent(
-						p -> {
-							String str = LanguageHandler.INFO_ZONEFORRENT.replaceAll("\\{ZONE\\}", zone.getDisplayName());
-							String[] splited = str.split("\\{AMOUNT\\}");
-							src.sendMessage(Text.builder()
-									.append(Text.of(TextColors.AQUA, (splited.length > 0) ? splited[0] : ""))
-									.append(Utils.formatPrice(TextColors.GREEN, price))
-									.append(Text.of(TextColors.AQUA, (splited.length > 1) ? splited[1] : "")).build());
-						}));
-		}
-		else
-		{
+			ArrayList<UUID> targets = nation.getCitizens();
+			if (!targets.contains(player.getUniqueId()))
+				targets.add(player.getUniqueId());
+			targets.forEach(
+					uuid -> Sponge.getServer().getPlayer(uuid).ifPresent(
+							p -> {
+								String str = LanguageHandler.INFO_ZONEFORRENT.replaceAll("\\{ZONE\\}", zone.getDisplayName());
+								String[] splited = str.split("\\{AMOUNT\\}");
+								src.sendMessage(Text.builder()
+										.append(Text.of(TextColors.AQUA, (splited.length > 0) ? splited[0] : ""))
+										.append(Utils.formatPrice(TextColors.GREEN, price))
+										.append(Text.of(TextColors.AQUA, (splited.length > 1) ? splited[1] : "")).build());
+							}));
+		} else {
 			src.sendMessage(Text.of(TextColors.RED, LanguageHandler.ERROR_NOPLAYER));
 		}
 		return CommandResult.success();

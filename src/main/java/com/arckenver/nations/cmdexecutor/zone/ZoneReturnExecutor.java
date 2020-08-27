@@ -34,7 +34,7 @@ public class ZoneReturnExecutor implements CommandExecutor {
 				.description(Text.of(""))
 				.permission("nations.command.zone.rent") //if can rent, also can return or else would be extortion
 				.arguments()
-				.executor(new ZoneRentExecutor())
+				.executor(new ZoneReturnExecutor())
 				.build(), "return", "release"); //release pun with lease and also has a meaning like this
 	}
 

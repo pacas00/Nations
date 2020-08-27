@@ -45,7 +45,7 @@ public class RentCollectRunnable implements Runnable {
 
 		Text rentTimeMessage = Text.of(TextColors.AQUA, LanguageHandler.INFO_RENTTIME);
 
-
+			MessageChannel.TO_CONSOLE.send(Text.of(TextColors.AQUA, LanguageHandler.INFO_RENTTIME));
 		if (NationsPlugin.getEcoService() == null) {
 			MessageChannel.TO_CONSOLE.send(Text.of(TextColors.RED, LanguageHandler.ERROR_NOECO));
 			return;
@@ -75,7 +75,7 @@ public class RentCollectRunnable implements Runnable {
 					if (!zone.isOwned()) continue;
 					Optional<Player> owner = Sponge.getServer().getPlayer(zone.getOwner());
 					if (!owner.isPresent())
-						continue; //probably something went wrong //todo gotta recheck if it only gets online players
+						continue; //probably something went wrong
 					owner.get().sendMessage(rentTimeMessage);
 					BigDecimal rentPrice = zone.getRentalPrice();
 

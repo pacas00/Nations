@@ -152,6 +152,8 @@ public class Utils
 				builder.append(Text.of(TextColors.GOLD, "\n" + LanguageHandler.FORMAT_SPAWN + ": ", TextColors.YELLOW, formatNationSpawns(nation, TextColors.YELLOW, clicker)));
 			}
 		}
+		builder.append(Text.of(TextColors.GOLD, "\n" + LanguageHandler.FORMAT_RENT_INTERVAL + ": ", TextColors.GREEN,
+				Text.of(nation.getRentInterval(), " ", LanguageHandler.FORMAT_HOURS)));
 
 		if (clicker == CLICKER_NONE)
 		{
@@ -347,7 +349,12 @@ public class Utils
 		builder.append(
 				Text.of(TextColors.GOLD, "\n" + LanguageHandler.FORMAT_PRICE + ": "),
 				(zone.isForSale()) ? formatPrice(TextColors.YELLOW, zone.getPrice()) : Text.of(TextColors.GRAY, LanguageHandler.FORMAT_NFS)
-				);
+		);
+		builder.append(
+				Text.of(TextColors.GOLD, "\n" + LanguageHandler.FORMAT_RENT_PRICE + ": "),
+				(zone.isForRent() && ((zone.isOwned() && clicker == CLICKER_DEFAULT) || !zone.isOwned()))
+						? formatPrice(TextColors.YELLOW, zone.getRentalPrice()) : Text.of(TextColors.GRAY, LanguageHandler.FORMAT_NFR)
+		);
 
 		if (clicker == CLICKER_NONE)
 		{

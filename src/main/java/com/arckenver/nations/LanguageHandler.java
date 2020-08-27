@@ -143,6 +143,8 @@ public class LanguageHandler
 
 	public static String INFO_FAILEDRENT = "You failed your rent and are going to lose the zone {ZONE}";
 
+	public static String INFO_RENTINTERVAL = "You set your nation rent interval to {NUMBER} hours.";
+
 	public static String INFO_NATIONCHATON_ON = "You are now speaking in your nation's private channel";
 	public static String INFO_NATIONCHAT_OFF = "You are no longer speaking in your nation's private channel";
 	public static String INFO_NATIONSPY_ON = "You are now spying nations' private channels";
@@ -268,6 +270,7 @@ public class LanguageHandler
 	public static String FORMAT_SIZE = "Size";
 	public static String FORMAT_MONEY = "Money";
 	public static String FORMAT_PRICE = "Price";
+	public static String FORMAT_RENT_PRICE = "Rent";
 	public static String FORMAT_SPAWN = "Spawn";
 	public static String FORMAT_PRESIDENT = "President";
 	public static String FORMAT_MINISTERS = "Ministers";
@@ -280,6 +283,7 @@ public class LanguageHandler
 	public static String FORMAT_NONE = "None";
 	public static String FORMAT_UNKNOWN = "Unknown";
 	public static String FORMAT_NFS = "Not for sale";
+	public static String FORMAT_NFR = "Not renting";
 	public static String FORMAT_CITIZEN = "Citizen";
 	public static String FORMAT_MINISTER = "Minister";
 	public static String FORMAT_HERMIT = "Hermit";
@@ -290,7 +294,9 @@ public class LanguageHandler
 	public static String CLICK = "click";
 	public static String FORMAT_ADMIN = "Admin";
 	public static String FORMAT_ZONES = "Zones";
-	
+	public static String FORMAT_RENT_INTERVAL = "Rent interval";
+	public static String FORMAT_HOURS = "hours";
+
 	public static String CLICKME = "click here";
 	public static String HEADER_NATIONLIST = "Nation List";
 	public static String HEADER_WORLDLIST = "World List";

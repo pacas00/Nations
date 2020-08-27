@@ -65,7 +65,7 @@ public class ZoneInfoExecutor implements CommandExecutor
 					return CommandResult.success();
 				}
 			}
-			int clicker = Utils.CLICKER_DEFAULT;
+			int clicker = Utils.CLICKER_NONE;
 			if (zone.isOwner(player.getUniqueId()) || zone.isCoowner(player.getUniqueId()) || nation.isStaff(player.getUniqueId()))
 			{
 				clicker = Utils.CLICKER_DEFAULT;
