@@ -108,6 +108,7 @@ public class LanguageHandler
 	public static String INFO_CONFIGRELOADED = "Config file has been reloaded";
 	
 	public static String INFO_UPKEEPANNOUNCE = "A new day is here ! Nations will now have to pay their upkeeps";
+	public static String INFO_RENTTIME = "It's time to pay rent in your nation, paying the landlord!";
 	public static String INFO_NATIONFAILUPKEEP = "Nation {NATION} could not pay its upkeep and fell into ruins";
 	public static String INFO_NATIONFALL = "Nation {NATION} fell into ruins !";
 
@@ -122,6 +123,7 @@ public class LanguageHandler
 	public static String ERROR_ECOTRANSACTION = "An unexpected error has occured while processing transaction";
 	public static String ERROR_ECONOACCOUNT = "Could not get your account on the economy plugin of this server";
 	public static String ERROR_ECONOOWNER = "Could not get zone owner's account on the economy plugin of this server";
+	public static String ERROR_ECONOZONE = "Could not get zone's account on the economy plugin of this server";
 	public static String ERROR_NEEDMONEY = "You need {AMOUNT} to perform that transaction";
 	public static String ERROR_NEEDMONEYNATION = "Your nation needs {AMOUNT} to perform that transaction";
 	public static String ERROR_NOENOUGHMONEY = "You don't have that much money";
@@ -129,14 +131,25 @@ public class LanguageHandler
 	public static String ERROR_NOMOREBLOCK = "Your nation can't buy more than {NUM} extra blocks";
 	public static String ERROR_NEEDSTANDNATION = "You must be standing in a nation to perform that command";
 	public static String ERROR_PERM_ZONEBUY = "You do not have permission to buy a zone in this nation";
-	
+	public static String ERROR_PERM_ZONERENT = "You do not have permission to rent a zone in this nation";
+
 	public static String SUCCESS_ADDBLOCKS = "Successfully bought {NUM} extra blocks for {AMOUNT}";
 	public static String SUCCESS_UNCLAIM = "You successfully unclaimed this area";
 	public static String SUCCESS_WITHDRAW = "You successfully took {AMOUNT} from your nation that has now {BALANCE}";
-	
+	public static String SUCCESS_WITHDRAW_ZONE = "You successfully took {AMOUNT} from your zone that has now {BALANCE}";
+
 	public static String INFO_UNCLAIMREFUND = "Your nation was refunded {AMOUNT} for unclaiming these {NUM} blocks ({PRECENT}%)";
 	public static String INFO_ZONEFORSALE = "{PLAYER} put zone {ZONE} up for sale at {AMOUNT}";
-	
+	public static String INFO_ZONEFORRENT = "{ZONE} is now up for rent at {AMOUNT}";
+
+	public static String INFO_PAYRENTZONEBALANCE = "Paid rent for zone {ZONE} with value {VALUE} using zone's account.";
+	public static String INFO_PAYRENTZONEPLAYER = "Paid rent for zone {ZONE} with value {VALUE} using player's account.";
+	public static String INFO_FAILEDRENT = "You failed your rent and are going to lose the zone {ZONE}";
+
+	public static String ERROR_NOTRENTING = "You are not renting this zone at this moment!";
+
+	public static String INFO_RENTINTERVAL = "You set your nation rent interval to {NUMBER} hours.";
+
 	public static String INFO_NATIONCHATON_ON = "You are now speaking in your nation's private channel";
 	public static String INFO_NATIONCHAT_OFF = "You are no longer speaking in your nation's private channel";
 	public static String INFO_NATIONSPY_ON = "You are now spying nations' private channels";
@@ -158,12 +171,14 @@ public class LanguageHandler
 	public static String ERROR_NAMELENGTH = "Nation name must contain at least {MIN} and at most {MAX} characters";
 	public static String ERROR_TAGALPHA = "Nation tag must be alphanumeric";
 	public static String ERROR_TAGLENGTH = "Nation tag must contain at least {MIN} and at most {MAX} characters";
+	public static String ERROR_DISPLAYLENGTH = "Nation display name must contain at least {MIN} and at most {MAX} characters";
 	public static String INFO_NEWNATIONANNOUNCE = "{PLAYER} has created a new nation named {NATION}";
 	public static String INFO_NEWNATION = "You successfully created nation {NATION}, don't forget to deposit money in the nation's bank with /n deposit";
 	public static String INFO_CLICK_DELSPAWN = "Click to delete spawn {SPAWNLIST} ";
 	public static String ERROR_BADSPAWNNAME = "Your nation doen't have any spawn with that name";
 	public static String SUCCESS_DELNATION = "Successfully removed nation spawn";
 	public static String SUCCESS_DEPOSIT = "You've successfully given {AMOUNT} to your nation that has now {BALANCE}";
+	public static String SUCCESS_DEPOSIT_ZONE = "You've successfully given {AMOUNT} to your zone that has now {BALANCE}";
 	public static String ERROR_HERE = "You are not standing on any nation's region";
 	public static String ERROR_ALREADYINNATION = "That player is already in your nation";
 	public static String ERROR_ALREADYINVITED = "Your nation already invited this citizen";
@@ -193,6 +208,7 @@ public class LanguageHandler
 	public static String INFO_SUCCESSOR = "{SUCCESSOR} replaces now {PLAYER} as nation's president";
 	public static String INFO_RENAME = "Nation {OLDNAME} changed its name to {NEWNAME}";
 	public static String INFO_TAG = "Nation {NAME} changed its tag from {OLDTAG} to {NEWTAG}";
+	public static String INFO_DISPLAY = "Nation {NAME} changed its display name from {OLDNAME} to {NEWNAME}";
 	public static String ERROR_BADSPAWNLOCATION = "Nation spawn must be set inside your territory";
 	public static String ERROR_ALPHASPAWN = "Spawn name must be alphanumeric and must contain between {MIN} and {MAX} characters";
 	public static String SUCCESS_CHANGESPAWN = "Successfully changed the nation spawn";
@@ -201,9 +217,11 @@ public class LanguageHandler
 	public static String INFO_TELEPORTED = "Teleported you to the nation spawn";
 	public static String ERROR_NEEDSTANDZONE = "You must be standing on a zone to perform that command";
 	public static String ERROR_ZONENFS = "This zone is not up for sale";
+	public static String ERROR_ZONENFR = "This zone is not up for rent";
 	public static String ERROR_ZONENOMONEY = "You need {AMOUNT} to pay for this zone";
 	public static String SUCCESS_ZONEBUY = "You are now the new owner of zone {ZONE}";
-	public static String INFO_ZONEBUY = "{PLAYER} bought you zone {ZONE} for {AMOUNT}";
+	public static String INFO_ZONEBUY = "{PLAYER} bought your zone {ZONE} for {AMOUNT}";
+	public static String INFO_ZONERENT = "{PLAYER} started renting zone {ZONE}";
 	public static String ERROR_NOSTANDZONENATION = "You're not standing on any zone of your nation";
 	public static String ERROR_PERM_NOTOWNER = "You must be owner of that zone to perform that command";
 	public static String ERROR_PERM_MANAGECOOWNER = "You can't add/remove yourself from the coowners of your zone";
@@ -218,7 +236,10 @@ public class LanguageHandler
 	public static String SUCCESS_ZONECREATE = "You have successfully created a zone named {ZONE}";
 	public static String SUCCESS_SETOWNER = "You are now the owner of zone {ZONE} inside of your nation";
 	public static String ERROR_NOOWNER = "You must own this zone to perform that command";
+	public static String ERROR_ISRENTING = "You are renting this zone, use /z return instead";
+	public static String ERROR_ISBOUGHT = "You have bought this zone, use /z delowner instead";
 	public static String INFO_NOOWNER = "Zone {ZONE} has now no owner";
+	public static String INFO_RETURNRENT = "{PLAYER} returned zone {ZONE} and this zone now has no owner";
 	public static String ERROR_NEEDSTANDZONESELF = "You must be standing on your zone to perform that command";
 	public static String ERROR_NEEDZONE = "You must specify zone name or stand on it";
 	public static String HEADER_ZONELIST = "{NATION}'s zones are {ZONELIST}";
@@ -244,15 +265,18 @@ public class LanguageHandler
 	public static String INFO_TELEPORTCOOLDOWN = "Teleport will start in 10 seconds";
 	public static String ERROR_NOHOME = "No spawn named 'home' found. Make one with /n setspawn home";
 	public static String DEFAULT_ZONENAME = "Unnamed";
+	public static String NATION_ID = "Nation ID";
 
 	public static String TOAST_WILDNAME = "Wilderness";
 	public static String TOAST_PVP = "PvP";
 	public static String TOAST_NOPVP = "No PvP";
 	public static String FORMAT_NATION = "Nation";
 	public static String FORMAT_ZONE = "Zone";
+	public static String FORMAT_ZONE_ID = "Zone ID";
 	public static String FORMAT_SIZE = "Size";
 	public static String FORMAT_MONEY = "Money";
 	public static String FORMAT_PRICE = "Price";
+	public static String FORMAT_RENT_PRICE = "Rent";
 	public static String FORMAT_SPAWN = "Spawn";
 	public static String FORMAT_PRESIDENT = "President";
 	public static String FORMAT_MINISTERS = "Ministers";
@@ -265,6 +289,7 @@ public class LanguageHandler
 	public static String FORMAT_NONE = "None";
 	public static String FORMAT_UNKNOWN = "Unknown";
 	public static String FORMAT_NFS = "Not for sale";
+	public static String FORMAT_NFR = "Not renting";
 	public static String FORMAT_CITIZEN = "Citizen";
 	public static String FORMAT_MINISTER = "Minister";
 	public static String FORMAT_HERMIT = "Hermit";
@@ -275,7 +300,10 @@ public class LanguageHandler
 	public static String CLICK = "click";
 	public static String FORMAT_ADMIN = "Admin";
 	public static String FORMAT_ZONES = "Zones";
-	
+	public static String FORMAT_RENT_INTERVAL = "Rent interval";
+	public static String FORMAT_HOURS = "hours";
+	public static String FORMAT_BALANCE = "Balance";
+
 	public static String CLICKME = "click here";
 	public static String HEADER_NATIONLIST = "Nation List";
 	public static String HEADER_WORLDLIST = "World List";
@@ -283,6 +311,8 @@ public class LanguageHandler
 	public static String TYPE_INTERACT = "INTERACT";
 	public static String VALUE_TRUE = "true";
 	public static String VALUE_FALSE = "false";
+
+	public static String ERROR_NEGATIVEINTERVAL = "You can't input negative values for rent intervals!";
 
 	public static String AXE_FIRST = "First position set to {COORD}";
 	public static String AXE_SECOND = "Second position set to {COORD}";
@@ -294,7 +324,8 @@ public class LanguageHandler
 	public static String COST_MSG_CLAIMPRICE = "Price per block claimed";
 	public static String COST_MSG_EXTRAPRICE = "Price per extra block";
 	public static String INFO_ZONEFS = "{PLAYER} made zone {ZONE} not for sale";
-	
+
+
 	private static File languageFile;
 	private static ConfigurationLoader<CommentedConfigurationNode> languageManager;
 	private static CommentedConfigurationNode language;

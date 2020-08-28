@@ -7,6 +7,7 @@ import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.util.concurrent.TimeUnit;
 
+import com.arckenver.nations.task.RentCollectRunnable;
 import org.slf4j.Logger;
 import org.spongepowered.api.Sponge;
 import org.spongepowered.api.config.ConfigDir;
@@ -34,9 +35,8 @@ import com.arckenver.nations.service.NationsService;
 import com.arckenver.nations.task.TaxesCollectRunnable;
 import com.google.inject.Inject;
 
-@Plugin(id = "nations-updated", name = "Nations", authors={"Arckenver", "Carrot"}, url="https://github.com/Arckenver/Nations", version = "2.10.1")
-public class NationsPlugin
-{
+@Plugin(id = "nations-updated", name = "Nations", authors = {"Arckenver", "Carrot"}, url = "https://github.com/Arckenver/Nations", version = "2.10.1")
+public class NationsPlugin {
 	private File rootDir;
 
 	private static NationsPlugin plugin;
@@ -51,8 +51,7 @@ public class NationsPlugin
 	private EconomyService economyService = null;
 
 	@Listener
-	public void onInit(GameInitializationEvent event)
-	{
+	public void onInit(GameInitializationEvent event) {
 		plugin = this;
 
 		rootDir = new File(defaultConfigDir, "nations");
@@ -65,15 +64,14 @@ public class NationsPlugin
 	}
 
 	@Listener
-	public void onStart(GameStartedServerEvent event)
-	{
+	public void onStart(GameStartedServerEvent event) {
 		LanguageHandler.load();
 		ConfigHandler.load();
 		DataHandler.load();
 
 		Sponge.getServiceManager()
-		.getRegistration(EconomyService.class)
-		.ifPresent(prov -> economyService = prov.getProvider());
+				.getRegistration(EconomyService.class)
+				.ifPresent(prov -> economyService = prov.getProvider());
 
 
 		NationCmds.create(this);
@@ -94,22 +92,32 @@ public class NationsPlugin
 		ZonedDateTime zonedNext = zonedNow.withHour(12).withMinute(0).withSecond(0);
 		if (zonedNow.compareTo(zonedNext) > 0)
 			zonedNext = zonedNext.plusDays(1);
-		long initalDelay = Duration.between(zonedNow, zonedNext).getSeconds();
+		long initialDelay = Duration.between(zonedNow, zonedNext).getSeconds();
+
+		ZonedDateTime zonedNextHour = zonedNow.plusHours(1).withMinute(0).withSecond(0);
+		long rentDelay = Duration.between(zonedNow, zonedNextHour).getSeconds();
 
 		Sponge.getScheduler()
-		.createTaskBuilder()
-		.execute(new TaxesCollectRunnable())
-		.delay(initalDelay, TimeUnit.SECONDS)
-		.interval(1, TimeUnit.DAYS)
-		.async()
-		.submit(this);
+				.createTaskBuilder()
+				.execute(new TaxesCollectRunnable())
+				.delay(initialDelay, TimeUnit.SECONDS)
+				.interval(1, TimeUnit.DAYS)
+				.async()
+				.submit(this);
+
+		Sponge.getScheduler()
+				.createTaskBuilder()
+				.execute(new RentCollectRunnable())
+				.delay(rentDelay, TimeUnit.SECONDS)
+				.interval(1, TimeUnit.HOURS)
+				.async()
+				.submit(this);
 
 		logger.info("Plugin ready");
 	}
 
 	@Listener
-	public void onServerStopping(GameStoppingServerEvent event)
-	{
+	public void onServerStopping(GameStoppingServerEvent event) {
 		logger.info("Saving data");
 		ConfigHandler.save();
 		DataHandler.save();
@@ -117,31 +125,25 @@ public class NationsPlugin
 	}
 
 	@Listener
-	public void onChangeServiceProvider(ChangeServiceProviderEvent event)
-	{
-		if (event.getService().equals(EconomyService.class))
-		{
+	public void onChangeServiceProvider(ChangeServiceProviderEvent event) {
+		if (event.getService().equals(EconomyService.class)) {
 			economyService = (EconomyService) event.getNewProviderRegistration().getProvider();
 		}
 	}
 
-	public static NationsPlugin getInstance()
-	{
+	public static NationsPlugin getInstance() {
 		return plugin;
 	}
 
-	public static Logger getLogger()
-	{
+	public static Logger getLogger() {
 		return getInstance().logger;
 	}
 
-	public static EconomyService getEcoService()
-	{
+	public static EconomyService getEcoService() {
 		return getInstance().economyService;
 	}
 
-	public static Cause getCause()
-	{
+	public static Cause getCause() {
 		return Sponge.getCauseStackManager().getCurrentCause();
 
 	}

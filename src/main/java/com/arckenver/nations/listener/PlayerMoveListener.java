@@ -73,7 +73,9 @@ public class PlayerMoveListener
 		String formatZonePrice = "";
 		
 		if (zone != null) {
-			if (zone.isNamed())
+			if (zone.hasDisplayName())
+				formatZoneName = ConfigHandler.getNode("toast", "formatZoneName").getString().replaceAll("\\{ARG\\}", zone.getDisplayName()) + " ";
+			else if (zone.isNamed())
 				formatZoneName = ConfigHandler.getNode("toast", "formatZoneName").getString().replaceAll("\\{ARG\\}", zone.getName()) + " ";
 			if (zone.isOwned())
 				formatZoneOwner = ConfigHandler.getNode("toast", "formatZoneOwner").getString().replaceAll("\\{ARG\\}", DataHandler.getPlayerName(zone.getOwner())) + " ";
@@ -90,7 +92,7 @@ public class PlayerMoveListener
 		}
 		
 		if (nation != null) {
-			toast = toast.replaceAll("\\{NATION\\}", nation.getName());
+			toast = toast.replaceAll("\\{NATION\\}", nation.getDisplayName());
 		} else {
 			toast = toast.replaceAll("\\{WILD\\}", LanguageHandler.TOAST_WILDNAME);
 		}

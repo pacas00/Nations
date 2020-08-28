@@ -97,9 +97,10 @@ public class Utils
 						((ConfigHandler.getNode("others", "enableNationRanks").getBoolean()) 
 								? ConfigHandler.getNationRank(nation.getNumCitizens()).getNode("nationTitle").getString()
 										: LanguageHandler.FORMAT_NATION)
-						+ " - " + nation.getName()),
+						+ " - " + nation.getDisplayName()),
 				Text.of(TextColors.GOLD, " }----------\n"));
 
+		builder.append(Text.of(TextColors.GOLD, "\n", LanguageHandler.NATION_ID, ": ", TextColors.GREEN, nation.getRealName()));
 		if (!nation.isAdmin())
 		{
 			BigDecimal balance = null;
@@ -151,6 +152,8 @@ public class Utils
 				builder.append(Text.of(TextColors.GOLD, "\n" + LanguageHandler.FORMAT_SPAWN + ": ", TextColors.YELLOW, formatNationSpawns(nation, TextColors.YELLOW, clicker)));
 			}
 		}
+		builder.append(Text.of(TextColors.GOLD, "\n" + LanguageHandler.FORMAT_RENT_INTERVAL + ": ", TextColors.GREEN,
+				Text.of(nation.getRentInterval(), " ", LanguageHandler.FORMAT_HOURS)));
 
 		if (clicker == CLICKER_NONE)
 		{
@@ -326,10 +329,12 @@ public class Utils
 		UUID owner = zone.getOwner();
 		builder.append(
 				Text.of(TextColors.GOLD, "----------{ "),
-				Text.of(TextColors.YELLOW, "" + LanguageHandler.FORMAT_ZONE + " - " + zone.getName()),
+				Text.of(TextColors.YELLOW, "" + LanguageHandler.FORMAT_ZONE + " - " + zone.getDisplayName()),
 				Text.of(TextColors.GOLD, " }----------"),
 				Text.of(TextColors.GOLD, "\n" + LanguageHandler.FORMAT_NATION + ": "),
-				Text.of(TextColors.YELLOW, nation.getName()),
+				Text.of(TextColors.YELLOW, nation.getDisplayName()),
+				Text.of(TextColors.GOLD, "\n" + LanguageHandler.FORMAT_ZONE_ID + ": "),
+				Text.of(TextColors.YELLOW, zone.getName()),
 				Text.of(TextColors.GOLD, "\n" + LanguageHandler.FORMAT_OWNER + ": "),
 				(owner == null) ? Text.of(TextColors.GRAY, LanguageHandler.FORMAT_NONE) : citizenClickable(TextColors.YELLOW, DataHandler.getPlayerName(owner)),
 						Text.of(TextColors.GOLD, "\n" + LanguageHandler.FORMAT_COOWNER + ": ")
@@ -344,7 +349,21 @@ public class Utils
 		builder.append(
 				Text.of(TextColors.GOLD, "\n" + LanguageHandler.FORMAT_PRICE + ": "),
 				(zone.isForSale()) ? formatPrice(TextColors.YELLOW, zone.getPrice()) : Text.of(TextColors.GRAY, LanguageHandler.FORMAT_NFS)
-				);
+		);
+		builder.append(
+				Text.of(TextColors.GOLD, "\n" + LanguageHandler.FORMAT_RENT_PRICE + ": "),
+				(zone.isForRent() && ((zone.isOwned() && clicker == CLICKER_DEFAULT) || !zone.isOwned()))
+						? formatPrice(TextColors.YELLOW, zone.getRentalPrice()) : Text.of(TextColors.GRAY, LanguageHandler.FORMAT_NFR)
+		);
+		if(zone.isForRent() && clicker == CLICKER_DEFAULT) { //either staff, owner or coowner
+			if(NationsPlugin.getEcoService() != null) {
+				Optional<Account> zoneAccount = NationsPlugin.getEcoService().getOrCreateAccount("zone-" + zone.getUUID());
+				zoneAccount.ifPresent(account -> builder.append(
+						Text.of(TextColors.GOLD, "\n" + LanguageHandler.FORMAT_BALANCE + ": "),
+						formatPrice(TextColors.YELLOW, account.getBalance(NationsPlugin.getEcoService().getDefaultCurrency()))
+				));
+			}
+		}
 
 		if (clicker == CLICKER_NONE)
 		{
