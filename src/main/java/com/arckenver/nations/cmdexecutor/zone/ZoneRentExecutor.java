@@ -53,11 +53,10 @@ public class ZoneRentExecutor implements CommandExecutor {
 				src.sendMessage(Text.of(TextColors.RED, LanguageHandler.ERROR_PERM_ZONERENT));
 				return CommandResult.success();
 			}
-			if (!zone.isForRent()) {
+			if (!zone.isForRent() || zone.isOwned()) {
 				src.sendMessage(Text.of(TextColors.RED, LanguageHandler.ERROR_ZONENFR));
 				return CommandResult.success();
 			}
-
 			if (NationsPlugin.getEcoService() == null) {
 				src.sendMessage(Text.of(TextColors.RED, LanguageHandler.ERROR_NOECO));
 				return CommandResult.success();
