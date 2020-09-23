@@ -94,7 +94,7 @@ public class ZoneDepositExecutor implements CommandExecutor {
 				src.sendMessage(Text.of(TextColors.RED, LanguageHandler.ERROR_ECOTRANSACTION));
 				return CommandResult.success();
 			} else {
-				String[] s1 = LanguageHandler.SUCCESS_WITHDRAW_ZONE.split("\\{AMOUNT\\}");
+				String[] s1 = LanguageHandler.SUCCESS_DEPOSIT_ZONE.split("\\{AMOUNT\\}");
 				Text.Builder builder = Text.builder();
 				if (s1[0].contains("{BALANCE}")) {
 					String[] split = s1[0].split("\\{BALANCE\\}");
