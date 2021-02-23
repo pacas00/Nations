@@ -51,10 +51,19 @@ public class BuildPermListener
 					return;
 				}
 
-				trans.setValid(false);
-				try {
-					player.sendMessage(Text.of(TextColors.RED, LanguageHandler.ERROR_PERM_BUILD));
-				} catch (Exception e) {}
+				if ((trans.getOriginal().getState().getType().getName().toLowerCase().endsWith(" door")
+						|| trans.getOriginal().getState().getType().getName().toLowerCase().endsWith(" trapdoor"))
+						&& DataHandler.getPerm("interact", player.getUniqueId(), trans.getOriginal().getLocation().get())) {
+					trans.setValid(true);
+				}
+
+				if (!trans.isValid()) {
+					trans.setValid(false);
+					try {
+						player.sendMessage(Text.of(TextColors.RED, LanguageHandler.ERROR_PERM_BUILD));
+					} catch (Exception e) {}
+				}
+
 			}
 		}));
 	}

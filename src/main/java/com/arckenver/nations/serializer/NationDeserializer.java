@@ -133,6 +133,13 @@ public class NationDeserializer implements JsonDeserializer<Nation> {
 				nation.setExtras(obj.get("extras").getAsInt());
 			if (obj.has("extraspawns"))
 				nation.setExtraSpawns(obj.get("extraspawns").getAsInt());
+
+			if (obj.has("allies")) {
+				//Added Allies
+				for (JsonElement element : obj.get("allies").getAsJsonArray()) {
+					nation.addAlly(UUID.fromString(element.getAsString()));
+				}
+			}
 		}
 		return nation;
 	}

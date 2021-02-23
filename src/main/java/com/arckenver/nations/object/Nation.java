@@ -20,6 +20,7 @@ import ninja.leaping.configurate.commented.CommentedConfigurationNode;
 
 public class Nation {
 	public static final String TYPE_OUTSIDER = "outsider";
+	public static final String TYPE_ALLY = "ally";
 	public static final String TYPE_CITIZEN = "citizen";
 	public static final String TYPE_COOWNER = "coowner";
 
@@ -36,6 +37,7 @@ public class Nation {
 	private UUID president;
 	private ArrayList<UUID> ministers;
 	private ArrayList<UUID> citizens;
+	private ArrayList<UUID> allies;
 	private Hashtable<String, Hashtable<String, Boolean>> perms;
 	private Hashtable<String, Boolean> flags;
 	private Hashtable<UUID, Zone> zones;
@@ -62,6 +64,7 @@ public class Nation {
 		this.president = null;
 		this.ministers = new ArrayList<>();
 		this.citizens = new ArrayList<>();
+		this.allies = new ArrayList<>();
 		this.flags = new Hashtable<>();
 		this.rentInterval = ConfigHandler.getNode("nations", "defaultRentInterval").getInt();
 		this.lastRentCollectTime = LocalDateTime.of(LocalDate.now(), LocalTime.of(LocalTime.now().getHour(), 0)); //just hours
@@ -73,6 +76,10 @@ public class Nation {
 			put(TYPE_OUTSIDER, new Hashtable<String, Boolean>() {{
 				put(PERM_BUILD, ConfigHandler.getNode("nations", "perms").getNode(TYPE_OUTSIDER).getNode(PERM_BUILD).getBoolean());
 				put(PERM_INTERACT, ConfigHandler.getNode("nations", "perms").getNode(TYPE_OUTSIDER).getNode(PERM_INTERACT).getBoolean());
+			}});
+			put(TYPE_ALLY, new Hashtable<String, Boolean>() {{
+				put(PERM_BUILD, ConfigHandler.getNode("nations", "perms").getNode(TYPE_ALLY).getNode(PERM_BUILD).getBoolean());
+				put(PERM_INTERACT, ConfigHandler.getNode("nations", "perms").getNode(TYPE_ALLY).getNode(PERM_INTERACT).getBoolean());
 			}});
 			put(TYPE_CITIZEN, new Hashtable<String, Boolean>() {{
 				put(PERM_BUILD, ConfigHandler.getNode("nations", "perms").getNode(TYPE_CITIZEN).getNode(PERM_BUILD).getBoolean());
@@ -278,6 +285,31 @@ public class Nation {
 			player.get().setMessageChannel(MessageChannel.TO_ALL);
 		}
 	}
+
+	//Allies
+
+	public ArrayList<UUID> getAllies() {
+		return allies;
+	}
+
+	public void addAlly(UUID uuid) {
+		allies.add(uuid);
+	}
+
+	public boolean isAlly(UUID uuid) {
+		return allies.contains(uuid);
+	}
+
+	public int getNumAllies() {
+		return allies.size();
+	}
+
+	public void removeAlly(UUID uuid) {
+		allies.remove(uuid);
+	}
+
+
+	//Allies End
 
 	public Hashtable<String, Boolean> getFlags() {
 		return flags;

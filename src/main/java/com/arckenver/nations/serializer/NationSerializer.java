@@ -157,6 +157,12 @@ public class NationSerializer implements JsonSerializer<Nation> {
 		}
 		json.add("citizens", citizensArray);
 
+		JsonArray alliesArray = new JsonArray();
+		for (UUID ally : nation.getAllies()) {
+			alliesArray.add(new JsonPrimitive(ally.toString()));
+		}
+		json.add("allies", alliesArray);
+
 		return json;
 	}
 }

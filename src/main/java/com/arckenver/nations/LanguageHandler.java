@@ -280,6 +280,8 @@ public class LanguageHandler
 	public static String FORMAT_SPAWN = "Spawn";
 	public static String FORMAT_PRESIDENT = "President";
 	public static String FORMAT_MINISTERS = "Ministers";
+	public static String FORMAT_ALLY = "Ally";
+	public static String FORMAT_ALLIES = "Allies";
 	public static String FORMAT_CITIZENS = "Citizens";
 	public static String FORMAT_PERMISSIONS = "Permissions";
 	public static String FORMAT_OUTSIDERS = "Outsiders";

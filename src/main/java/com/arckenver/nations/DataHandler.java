@@ -270,6 +270,11 @@ public class DataHandler
 				}
 				return nation.getPerm(Nation.TYPE_CITIZEN, perm);
 			}
+			//Allies
+			Nation playerNation = getNationOfPlayer(playerUUID);
+			if (playerNation != null && nation.isAlly(playerNation.getUUID())) {
+				return nation.getPerm(Nation.TYPE_ALLY, perm);
+			}
 			return nation.getPerm(Nation.TYPE_OUTSIDER, perm);
 		}
 
@@ -279,6 +284,12 @@ public class DataHandler
 			return zone.getPerm(Nation.TYPE_COOWNER, perm);
 		if (nation.isCitizen(playerUUID))
 			return zone.getPerm(Nation.TYPE_CITIZEN, perm);
+
+		//Allies
+		Nation playerNation = getNationOfPlayer(playerUUID);
+		if (playerNation != null && nation.isAlly(playerNation.getUUID())) {
+			return zone.getPerm(Nation.TYPE_ALLY, perm);
+		}
 
 		return zone.getPerm(Nation.TYPE_OUTSIDER, perm);
 	}

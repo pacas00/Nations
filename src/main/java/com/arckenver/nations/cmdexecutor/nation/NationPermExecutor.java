@@ -29,6 +29,7 @@ public class NationPermExecutor implements CommandExecutor
 						GenericArguments.choices(Text.of("type"),
 								ImmutableMap.<String, String> builder()
 										.put(Nation.TYPE_OUTSIDER, Nation.TYPE_OUTSIDER)
+										.put(Nation.TYPE_ALLY, Nation.TYPE_ALLY)
 										.put(Nation.TYPE_CITIZEN, Nation.TYPE_CITIZEN)
 										.build()),
 						GenericArguments.choices(Text.of("perm"),
